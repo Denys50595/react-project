@@ -3,13 +3,17 @@ import PageNotFound from "./pages/PageNotFound";
 import AuthLayout from "./pages/Auth/AuthLayout";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
+import MainLayout from "./pages/Main/MainLayout";
+import Menu from "./pages/Main/Menu";
 
 export enum RoutesPath {
+  Empty = "",
   Start = "/",
   Auth = "auth",
-  Empty = "",
   Login = "login",
   SignUp = "sign-up",
+  Main = "main",
+  Menu = "menu",
   NotFound = "*",
 }
 
@@ -37,6 +41,20 @@ export const MainRoutes: Array<{
       {
         path: RoutesPath.SignUp,
         component: <SignUp />,
+      },
+    ],
+  },
+  {
+    path: RoutesPath.Main,
+    component: <MainLayout />,
+    children: [
+      {
+        path: RoutesPath.Empty,
+        component: <Navigate to="menu" replace={true} />,
+      },
+      {
+        path: RoutesPath.Menu,
+        component: <Menu />,
       },
     ],
   },

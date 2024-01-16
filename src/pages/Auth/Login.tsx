@@ -1,13 +1,17 @@
 import React, { useContext } from "react";
-import './Auth.css';
+import { useNavigate } from "react-router-dom";
 import { UserContext, UserContextType } from "../../contexts/UserContext";
+import "./Auth.css";
 
 const Login: React.FC = () => {
   const { setUserName } = useContext(UserContext) as UserContextType;
   const [name, setName] = React.useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
+    console.log(name, "name");
     setUserName(name);
+    navigate("/main");
   };
 
   return (

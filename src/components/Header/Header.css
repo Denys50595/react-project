@@ -1,0 +1,11 @@
+.header-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffa500;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
