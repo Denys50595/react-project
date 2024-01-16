@@ -1,29 +1,25 @@
 import React, { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import './Auth.css';
+import { UserContext, UserContextType } from "../../contexts/UserContext";
 
 const Login: React.FC = () => {
-  const context = useContext(UserContext);
-  const [username, setUsername] = React.useState("");
+  const { setUserName } = useContext(UserContext) as UserContextType;
+  const [name, setName] = React.useState("");
 
   const handleLogin = () => {
-    context?.setUserName(username);
-    console.log("Logged in as:", username);
-    console.log("context", context?.userName);
+    setUserName(name);
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login Page</h2>
       <form>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            placeholder="Enter your name"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
+        <input
+          type="text"
+          value={name}
+          placeholder="Enter your name"
+          onChange={(e) => setName(e.target.value)}
+        />
         <button type="button" onClick={handleLogin}>
           Login
         </button>

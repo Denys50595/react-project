@@ -1,6 +1,6 @@
 import React, { ReactNode, createContext, useState } from "react";
 
-interface UserContextType {
+export interface UserContextType {
   userName: string;
   setUserName: React.Dispatch<React.SetStateAction<string>>;
 }
