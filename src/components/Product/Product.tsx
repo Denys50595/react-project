@@ -1,15 +1,11 @@
+import { useAppDispatch } from "../../redux/hooks";
 import "./Product.css";
+import { addItem, removeItem } from "./basketSlice";
+import { ProductI } from "./productInterface";
 
-interface Props {
-  id: number;
-  name: string;
-  unitPrice: number;
-  imageUrl: string;
-  ingredients: Array<string>;
-  soldOut: boolean;
-}
+const Product = ({ item }: { item: ProductI }) => {
+  const dispatch = useAppDispatch();
 
-const Product = ({ item }: { item: Props }) => {
   return (
     <div className={`product-container ${!item.soldOut ? "" : "sold-product"}`}>
       <img src={item.imageUrl} />
@@ -26,16 +22,30 @@ const Product = ({ item }: { item: Props }) => {
             )}
           </div>
         </div>
-        <div className="product-action-wrap">
-          {!item.soldOut ? (
-            <>
-              <p>&euro;{item.unitPrice}</p>
-              <button className="add-btn">Add to card</button>
-            </>
-          ) : (
-            <p>Sold Out</p>
-          )}
-        </div>
+        {item.showDeleteBtn ? (
+          <button
+            onClick={() => dispatch(removeItem(item.id))}
+            className="add-btn"
+          >
+            Delete
+          </button>
+        ) : (
+          <div className="product-action-wrap">
+            {!item.soldOut ? (
+              <>
+                <p>&euro;{item.unitPrice}</p>
+                <button
+                  onClick={() => dispatch(addItem(item))}
+                  className="add-btn"
+                >
+                  Add to card
+                </button>
+              </>
+            ) : (
+              <p>Sold Out</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

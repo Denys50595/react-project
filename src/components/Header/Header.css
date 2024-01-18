@@ -1,7 +1,8 @@
 .header-container {
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   background: #ffa500;
   height: 5rem;
   display: flex;

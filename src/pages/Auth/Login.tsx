@@ -9,7 +9,6 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    console.log(name, "name");
     setUserName(name);
     navigate("/main");
   };

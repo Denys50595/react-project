@@ -5,6 +5,7 @@ import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import MainLayout from "./pages/Main/MainLayout";
 import Menu from "./pages/Main/Menu";
+import Basket from "./pages/Main/Basket";
 
 export enum RoutesPath {
   Empty = "",
@@ -14,6 +15,7 @@ export enum RoutesPath {
   SignUp = "sign-up",
   Main = "main",
   Menu = "menu",
+  Basket = "basket",
   NotFound = "*",
 }
 
@@ -55,6 +57,10 @@ export const MainRoutes: Array<{
       {
         path: RoutesPath.Menu,
         component: <Menu />,
+      },
+      {
+        path: RoutesPath.Basket,
+        component: <Basket />,
       },
     ],
   },
