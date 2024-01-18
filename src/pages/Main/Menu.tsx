@@ -32,7 +32,6 @@ const Menu = () => {
 
   return (
     <>
-      <Header />
       {loading && <p>Loading...</p>}
       {err && <p>Error: {err.message}</p>}
       {data && (

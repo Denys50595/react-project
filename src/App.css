@@ -15,3 +15,7 @@ p {
 .app-container {
   height: 100%;
 }
+
+.cursor-poiner {
+  cursor: pointer;
+}

@@ -1,7 +1,8 @@
 import { useAppDispatch } from "../../redux/hooks";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import "./Product.css";
-import { addItem, removeItem } from "./basketSlice";
-import { ProductI } from "./productInterface";
+import { addItem } from "./basketSlice";
+import { ProductI } from "./product.interface";
 
 const Product = ({ item }: { item: ProductI }) => {
   const dispatch = useAppDispatch();
@@ -22,30 +23,19 @@ const Product = ({ item }: { item: ProductI }) => {
             )}
           </div>
         </div>
-        {item.showDeleteBtn ? (
-          <button
-            onClick={() => dispatch(removeItem(item.id))}
-            className="add-btn"
-          >
-            Delete
-          </button>
-        ) : (
-          <div className="product-action-wrap">
-            {!item.soldOut ? (
-              <>
-                <p>&euro;{item.unitPrice}</p>
-                <button
-                  onClick={() => dispatch(addItem(item))}
-                  className="add-btn"
-                >
-                  Add to card
-                </button>
-              </>
-            ) : (
-              <p>Sold Out</p>
-            )}
-          </div>
-        )}
+        <div className="product-action-wrap">
+          {!item.soldOut ? (
+            <>
+              <p>&euro;{item.unitPrice}</p>
+              <PrimaryButton
+                btnClick={() => dispatch(addItem(item))}
+                title="Add to card"
+              />
+            </>
+          ) : (
+            <p>Sold Out</p>
+          )}
+        </div>
       </div>
     </div>
   );
