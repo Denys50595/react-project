@@ -5,12 +5,12 @@ interface Props {
   btnClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const PrimaryButton = ({ title, btnClick }: Props) => {
+const Button = ({ title, btnClick }: Props) => {
   return (
-    <button onClick={btnClick} className="add-btn">
+    <button onClick={btnClick} className="custom-btn">
       {title}
     </button>
   );
 };
 
-export default PrimaryButton;
+export default Button;

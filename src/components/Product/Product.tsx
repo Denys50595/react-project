@@ -1,10 +1,10 @@
 import { useAppDispatch } from "../../redux/hooks";
-import PrimaryButton from "../Buttons/PrimaryButton";
+import PrimaryButton from "../Buttons/Button";
 import "./Product.css";
 import { addItem } from "./basketSlice";
-import { ProductI } from "./product.interface";
+import { IProduct } from "./product.interface";
 
-const Product = ({ item }: { item: ProductI }) => {
+const Product = ({ item }: { item: IProduct }) => {
   const dispatch = useAppDispatch();
 
   return (

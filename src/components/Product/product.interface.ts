@@ -5,5 +5,5 @@ export interface IProduct {
   imageUrl: string;
   ingredients: Array<string>;
   soldOut: boolean;
-  quantity?: number | any;
+  quantity: number;
 }

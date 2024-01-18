@@ -1,30 +1,34 @@
+import { memo, useCallback } from "react";
 import { useAppDispatch } from "../../redux/hooks";
-import PrimaryButton from "../Buttons/PrimaryButton";
+import Button from "../Buttons/Button";
 import { decreaseQuantity, increaseQuantity, removeItem } from "./basketSlice";
 import { IProduct } from "./product.interface";
 
 const BasketItem = ({ item }: { item: IProduct }) => {
   const dispatch = useAppDispatch();
 
+  const handleDecrease = useCallback(() => {
+    dispatch(decreaseQuantity(item.id));
+  }, [item.id]);
+
+  const handleIncrease = useCallback(() => {
+    dispatch(increaseQuantity(item.id));
+  }, [item.id]);
+
+  const handleRemove = () => {
+    dispatch(removeItem(item.id));
+  };
+
   return (
     <div className="product-container">
       {item.quantity}* {item.name}
       &euro;{item.unitPrice * item.quantity}
-      <PrimaryButton
-        btnClick={() => dispatch(decreaseQuantity(item.id))}
-        title="-"
-      />
+      <Button btnClick={handleDecrease} title="-" />
       <div>{item.quantity}</div>
-      <PrimaryButton
-        btnClick={() => dispatch(increaseQuantity(item.id))}
-        title="+"
-      />
-      <PrimaryButton
-        btnClick={() => dispatch(removeItem(item.id))}
-        title="Delete"
-      />
+      <Button btnClick={handleIncrease} title="+" />
+      <Button btnClick={handleRemove} title="Delete" />
     </div>
   );
 };
 
-export default BasketItem;
+export default memo(BasketItem);
