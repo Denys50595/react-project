@@ -1,10 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  removeItem,
-  resetItem,
-  selectBasket,
-} from "../../components/Product/basketSlice";
+import { resetItem, selectBasket } from "../../components/Product/basketSlice";
 import BasketItem from "../../components/Product/BasketItem";
 import Button from "../../components/Buttons/Button";
 import { Link } from "react-router-dom";
