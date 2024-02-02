@@ -3,10 +3,12 @@ import { IProduct } from "./product.interface";
 
 export type BasketSlice = {
   items: IProduct[];
+  total: number;
 };
 
 const initialState: BasketSlice = {
   items: [],
+  total: 0,
 };
 
 export const basketSlice = createSlice({
@@ -38,10 +40,25 @@ export const basketSlice = createSlice({
           : product
       );
     },
+    calculateTotal: (state) => {
+      state.total = state.items.reduce(
+        (acc, currentItem) =>
+          acc + currentItem.quantity * currentItem.unitPrice,
+        0
+      );
+    },
+    addPriority: (state, { payload }) => {
+      console.log(payload);
+      if (payload) {
+        state.total = state.total + 8;
+      } else {
+        state.total = state.total - 8;
+      }
+    },
     resetItem: () => initialState,
   },
   selectors: {
-    selectBasket: (state) => state.items,
+    selectBasket: (state) => state,
   },
 });
 
@@ -51,6 +68,8 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   resetItem,
+  calculateTotal,
+  addPriority,
 } = basketSlice.actions;
 export const { selectBasket } = basketSlice.selectors;
 export default basketSlice.reducer;

@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { resetItem, selectBasket } from "../../components/Product/basketSlice";
+import {
+  calculateTotal,
+  resetItem,
+  selectBasket,
+} from "../../components/Product/basketSlice";
 import BasketItem from "../../components/Product/BasketItem";
 import Button from "../../components/Buttons/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Basket: React.FC = () => {
   const data = useAppSelector(selectBasket);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleTotal = useCallback(() => {
+    dispatch(calculateTotal());
+  }, [dispatch]);
+
+  const createNewOrder = () => {
+    handleTotal();
+    navigate("/main/order/new");
+  };
 
   return (
     <>
@@ -18,12 +32,12 @@ const Basket: React.FC = () => {
               <div className="arrow left"></div>
               Back to menu
             </Link>
-            {data.length == 0 && <p>Basket is empty</p>}
-            {data.map((item, i) => (
+            {data.items.length == 0 && <p>Basket is empty</p>}
+            {data.items.map((item, i) => (
               <BasketItem item={item} key={i} />
             ))}
           </div>
-          {data.length > 0 && (
+          {data.items.length > 0 && (
             <Button
               btnClick={() => {
                 dispatch(resetItem());
@@ -31,6 +45,7 @@ const Basket: React.FC = () => {
               title="Clear basket"
             />
           )}
+          <Button btnClick={() => createNewOrder()} title="Create order" />
         </>
       )}
     </>
