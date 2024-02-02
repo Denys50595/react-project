@@ -48,7 +48,6 @@ export const basketSlice = createSlice({
       );
     },
     addPriority: (state, { payload }) => {
-      console.log(payload);
       if (payload) {
         state.total = state.total + 8;
       } else {

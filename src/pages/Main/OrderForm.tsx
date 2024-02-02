@@ -10,10 +10,13 @@ import {
   addPriority,
   selectBasket,
 } from "../../components/Product/basketSlice";
+import { API_URL } from "../../env";
+import { useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const orders = useAppSelector(selectBasket);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { userName } = useContext(UserContext) as UserContextType;
   const {
     handleSubmit,
@@ -21,7 +24,7 @@ const OrderForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: userName,
+      customer: userName,
       phone: "",
       address: "",
       priority: false,
@@ -30,7 +33,20 @@ const OrderForm = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log("Form data:", data);
+    const url = `${API_URL}/order`;
+    const body = Object.assign(data, { cart: orders.items, position: "" });
+    const options = {
+      method: "POST",
+      body: JSON.stringify(body),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === "success") {
+          const id = res.data.id;
+          navigate(`/main/order/${id}`);
+        }
+      });
   };
 
   const handlePriority = (ev: any) => {
@@ -41,9 +57,8 @@ const OrderForm = () => {
     <div className="menu-container">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="name"
+          name="customer"
           control={control}
-          defaultValue={userName}
           render={({ field }) => (
             <Input
               {...field}

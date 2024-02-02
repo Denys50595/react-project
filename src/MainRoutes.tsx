@@ -7,6 +7,7 @@ import MainLayout from "./pages/Main/MainLayout";
 import Menu from "./pages/Main/Menu";
 import Basket from "./pages/Main/Basket";
 import OrderForm from "./pages/Main/OrderForm";
+import OrderDetails from "./pages/Main/OrderDetails";
 
 export enum RoutesPath {
   Empty = "",
@@ -18,6 +19,7 @@ export enum RoutesPath {
   Menu = "menu",
   Basket = "basket",
   OrderForm = "order/new",
+  OrderDetails = "order/:id",
   NotFound = "*",
 }
 
@@ -67,6 +69,10 @@ export const MainRoutes: Array<{
       {
         path: RoutesPath.OrderForm,
         component: <OrderForm />,
+      },
+      {
+        path: RoutesPath.OrderDetails,
+        component: <OrderDetails />,
       },
     ],
   },
