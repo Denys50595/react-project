@@ -1,6 +1,6 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/FormElement/Input";
-import { useContext } from "react";
+import { ChangeEvent, useContext } from "react";
 import { UserContext, UserContextType } from "../../contexts/UserContext";
 import Checkbox from "../../components/FormElement/Checkbox";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,10 +10,17 @@ import {
   addPriority,
   selectBasket,
 } from "../../components/Product/basketSlice";
-import { API_URL } from "../../env";
 import { useNavigate } from "react-router-dom";
+import { sendOrderItems } from "./OrderSlice";
 
-const OrderForm = () => {
+interface IOrderForm {
+  address: string;
+  customer: string;
+  phone: string;
+  priority: boolean;
+}
+
+const OrderForm: React.FC = () => {
   const orders = useAppSelector(selectBasket);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -32,25 +39,28 @@ const OrderForm = () => {
     resolver: yupResolver(newOrderSchema),
   });
 
-  const onSubmit = (data: any) => {
-    const url = `${API_URL}/order`;
+  const onSubmit: SubmitHandler<IOrderForm> = (data) => {
     const body = Object.assign(data, { cart: orders.items, position: "" });
-    const options = {
-      method: "POST",
-      body: JSON.stringify(body),
-    };
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === "success") {
-          const id = res.data.id;
-          navigate(`/main/order/${id}`);
-        }
-      });
+    dispatch(sendOrderItems(body)).then((res) => {
+      const serverRes = res.payload as {
+        status: string;
+        message: string;
+        data: { id: string };
+      };
+      if (serverRes.status === "success") {
+        const id = serverRes.data.id;
+        navigate(`/main/order/${id}`);
+      }
+    });
   };
 
-  const handlePriority = (ev: any) => {
-    dispatch(addPriority(ev.target.checked));
+  const handlePriority = (
+    ev:
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLTextAreaElement>
+      | undefined
+  ) => {
+    dispatch(addPriority((ev?.target as HTMLInputElement).checked));
   };
 
   return (
@@ -98,7 +108,12 @@ const OrderForm = () => {
           render={({ field }) => (
             <Checkbox
               {...field}
-              onChange={(ev: any) => handlePriority(ev)}
+              onChange={(
+                ev:
+                  | ChangeEvent<HTMLInputElement>
+                  | ChangeEvent<HTMLTextAreaElement>
+                  | undefined
+              ) => handlePriority(ev)}
               type="checkbox"
               label="Priority"
             />
