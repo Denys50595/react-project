@@ -1,13 +1,15 @@
 import { Navigate } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";
 import AuthLayout from "./pages/Auth/AuthLayout";
+import MainLayout from "./pages/Main/MainLayout";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
-import MainLayout from "./pages/Main/MainLayout";
-import Menu from "./pages/Main/Menu";
-import Basket from "./pages/Main/Basket";
-import OrderForm from "./pages/Main/OrderForm";
-import OrderDetails from "./pages/Main/OrderDetails";
+import { lazy } from "react";
+
+const MenuLazy = lazy(() => import("./pages/Main/Menu"));
+const BasketLazy = lazy(() => import("./pages/Main/Basket"));
+const OrderFormLazy = lazy(() => import("./pages/Main/OrderForm"));
+const OrderDetailsLazy = lazy(() => import("./pages/Main/OrderDetails"));
 
 export enum RoutesPath {
   Empty = "",
@@ -60,19 +62,19 @@ export const MainRoutes: Array<{
       },
       {
         path: RoutesPath.Menu,
-        component: <Menu />,
+        component: <MenuLazy />,
       },
       {
         path: RoutesPath.Basket,
-        component: <Basket />,
+        component: <BasketLazy />,
       },
       {
         path: RoutesPath.OrderForm,
-        component: <OrderForm />,
+        component: <OrderFormLazy />,
       },
       {
         path: RoutesPath.OrderDetails,
-        component: <OrderDetails />,
+        component: <OrderDetailsLazy />,
       },
     ],
   },

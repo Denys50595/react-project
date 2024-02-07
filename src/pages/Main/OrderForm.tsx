@@ -66,58 +66,37 @@ const OrderForm: React.FC = () => {
   return (
     <div className="menu-container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
+        <Input
+          control={control}
           name="customer"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="text"
-              label="Name"
-              placeholder="Enter your name"
-            />
-          )}
+          type="text"
+          label="Name"
+          placeholder="Enter your name"
         />
-        <Controller
+        <Input
+          control={control}
           name="phone"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="phone"
-              label="Phone"
-              placeholder="Enter your phone"
-            />
-          )}
+          type="phone"
+          label="Phone"
+          placeholder="Enter your phone"
         />
-        <Controller
+        <Input
+          control={control}
           name="address"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              type="text"
-              label="Address"
-              placeholder="Enter your address"
-            />
-          )}
+          type="text"
+          label="Address"
+          placeholder="Enter your address"
         />
-        <Controller
-          name="priority"
+        <Checkbox
           control={control}
-          render={({ field }) => (
-            <Checkbox
-              {...field}
-              onChange={(
-                ev:
-                  | ChangeEvent<HTMLInputElement>
-                  | ChangeEvent<HTMLTextAreaElement>
-                  | undefined
-              ) => handlePriority(ev)}
-              type="checkbox"
-              label="Priority"
-            />
-          )}
+          name="priority"
+          label="Priority"
+          onChange={(
+            ev:
+              | ChangeEvent<HTMLInputElement>
+              | ChangeEvent<HTMLTextAreaElement>
+              | undefined
+          ) => handlePriority(ev)}
         />
         <button type="submit">Order now for &euro; {orders.total}</button>
       </form>

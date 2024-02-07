@@ -1,3 +1,5 @@
+import { Control, FieldValues, useController } from "react-hook-form";
+
 interface Props {
   label: string;
   type: string;
@@ -12,28 +14,24 @@ interface Props {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
-  value: string;
+  control: Control<FieldValues>;
+  name: string;
 }
 
-const Input = ({
-  label,
+const Input: React.FC<Props> = ({
   type,
+  label,
   placeholder,
-  onChange,
-  onBlur,
-  value,
+  control,
+  name,
 }: Props) => {
+  const { field } = useController({ control, name });
+
   return (
     <div>
       <label>
         {label}
-        <input
-          type={type}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
+        <input {...field} type={type} placeholder={placeholder} />
       </label>
     </div>
   );
